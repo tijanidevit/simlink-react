@@ -1,23 +1,36 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import axios from "axios";
 import * as Yup from "yup";
 
 const AddProject = () => {
   const initialValues = {
+    user_id: 1,
     title: "",
     image: "",
     description: "",
     type: "",
   };
 
+  const token = "dwjdhjwdwdhjedejhdehjd";
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    Accept: "Application/json",
+  };
+
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("Custom error message"),
-    image: Yup.string().required(),
+    image: Yup.mixed().required("Project Image is required"),
     description: Yup.string().required(),
     type: Yup.string().required(),
   });
   const onSubmit = (data) => {
     console.log(data);
+    axios
+      .post("http://127.0.0.1:8000/api/artists/projects/", data, headers)
+      .then((res) => {
+        console.log(res);
+      });
   };
   return (
     <>
@@ -27,6 +40,7 @@ const AddProject = () => {
         initialValues={initialValues}
         onSubmit={onSubmit}
         validationSchema={validationSchema}
+        enctype="multipart/form-data"
       >
         <Form>
           <div>
@@ -51,8 +65,8 @@ const AddProject = () => {
             <Field as="select" name="type">
               <option value="single">Single</option>
               <option value="album">Album</option>
-              <ErrorMessage name="type" component="span" />
             </Field>
+            <ErrorMessage name="type" component="span" />
           </div>
 
           <div style={{ marginTop: 100 }}>

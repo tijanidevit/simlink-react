@@ -10,6 +10,12 @@ const ArtistLayout = () => {
             <Link to="/artists">Home</Link>
           </li>
           <li>
+            <Link to="/artists/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/artists/register">Register</Link>
+          </li>
+          <li>
             <Link to="/artists/dashboard">Dashboard</Link>
           </li>
           <li>
